@@ -1,0 +1,106 @@
+ESG Supply Chain App - How It Works and How to Use It
+
+Overview
+This app is a blockchain-based ESG supply chain system. It lets a company log in with a wallet, approve suppliers, collect ESG reports, anchor report hashes on-chain, and store the full report data off-chain for review.
+
+Main Flow
+1. Open the app in the browser.
+2. Connect your wallet on the login page.
+3. The app checks whether the wallet belongs to a company or supplier.
+4. After login, the correct workspace opens based on your role.
+5. Companies can manage suppliers and review reports.
+6. Suppliers can submit ESG reports and view their own submissions.
+
+Pages and What They Do
+
+1. Login Page
+This is the first page you see.
+- Connects MetaMask or another compatible wallet.
+- Checks the connected wallet address.
+- Detects whether the user is a company wallet or supplier wallet.
+- Shows a short info icon in the header with a description of the system.
+
+How to use:
+- Click the wallet connect button.
+- Approve the request in your wallet.
+- Wait for the app to verify your role.
+
+2. Company Dashboard
+This page is for company users.
+- Shows company ESG overview and supply chain activity.
+- Displays report and supplier summary information.
+- Gives access to supplier onboarding and report review.
+
+How to use:
+- Log in with a company wallet.
+- Use the dashboard to view ESG activity.
+- Switch to Supplier management to add or approve suppliers.
+- Open Reports to review submitted ESG records.
+
+3. Supplier Onboarding / Supplier Management
+This page is for company users who need to register suppliers.
+- Collects supplier wallet address.
+- Collects supplier company name.
+- Saves supplier access details.
+- Records approval so the supplier can submit reports.
+
+How to use:
+- Enter the supplier wallet address.
+- Enter the supplier company name.
+- Add an access note if needed.
+- Click Record to Blockchain.
+
+4. Supplier Submission Page
+This page is for supplier users.
+- Lets suppliers create and submit ESG reports.
+- Uploads evidence files when needed.
+- Sends report data to storage.
+- Anchors the report hash on-chain for verification.
+
+How to use:
+- Log in with a supplier wallet.
+- Fill in the ESG report form.
+- Add evidence files if required.
+- Submit the report.
+- After submission, review the saved report in the Reports page.
+
+5. Reports Page
+This page is used by both company and supplier users.
+- Shows submitted reports.
+- Lets users review report details.
+- Displays verification and chain anchoring information.
+
+How to use:
+- Open the Reports page from the navigation.
+- Click a report to review it.
+- Check whether it has been anchored on-chain.
+- Use it to verify ESG history and traceability.
+
+How the System Works Behind the Scenes
+- Wallet login identifies the user role.
+- Supplier approval is checked on-chain.
+- ESG report data is hashed before submission.
+- The hash is anchored on DCAI / blockchain.
+- Full report data is stored in external services for retrieval and review.
+- The app combines blockchain verification with off-chain data storage.
+
+Typical User Steps
+For a company:
+1. Connect wallet.
+2. Enter the dashboard.
+3. Open Supplier management.
+4. Add and approve suppliers.
+5. Open Reports and review submissions.
+
+For a supplier:
+1. Connect wallet.
+2. Enter the supplier workspace.
+3. Fill out the ESG report form.
+4. Upload evidence if needed.
+5. Submit the report.
+6. Check the Reports page for confirmation.
+
+Notes
+- MetaMask is required for wallet login.
+- A valid DCAI RPC URL must be available in the frontend environment.
+- The app is designed to show traceability, supplier control, and report verification in one place.

@@ -1,0 +1,115 @@
+Canine Care Page Features and How They Work
+
+Overview
+Canine Care is a Flutter app for dog posture analysis, dog profile management, scan history, and helpful guidance. The app uses Firebase Authentication and Firestore, and it supports both mobile and web.
+
+Main App Flow
+1. When the app starts, AuthGate checks whether a Firebase user is logged in.
+2. If no user is logged in, the app shows LoginPage or SignUpPage.
+3. If the user signed up with email and password, EmailVerificationPage is shown until the email is verified.
+4. If the user has not finished their profile, ProfileCompletionPage is shown.
+5. Once authentication and profile setup are complete, the user enters HomePage.
+
+Page-by-Page Features
+
+1. LoginPage
+   - Lets existing users sign in with email and password.
+   - Validates input and shows loading, success, and error messages.
+   - Can switch to SignUpPage for new users.
+   - After a successful login, the app continues to the next required step such as email verification or profile completion.
+
+2. SignUpPage
+   - Creates a new user account.
+   - Collects account details and profile details such as username, phone number, city, living environment, and region.
+   - Supports step-by-step registration and terms acceptance.
+   - Sends the user into the verification and profile setup flow before they reach the home screen.
+
+3. EmailVerificationPage
+   - Asks the user to verify their email address before using the app fully.
+   - Automatically checks verification status on a timer.
+   - Can resend the verification email with a cooldown.
+   - After verification, the app moves to profile completion or directly to HomePage depending on account status.
+
+4. ProfileCompletionPage
+   - Collects the remaining profile information for the user.
+   - Saves username, phone number, city, living environment, and region to Firestore.
+   - Loads existing user data when available so users can continue from saved information.
+   - Once complete, the app returns to HomePage.
+
+5. HomePage
+   - Acts as the main dashboard after login.
+   - Loads the user's dogs from Firestore and keeps the list updated in real time.
+   - Lets the user choose a dog before starting a scan.
+   - Supports image capture or upload for four angles: front, left, right, and back.
+   - Checks photo quality before accepting an image.
+   - Shows snack bars and alerts when photos are accepted or when quality needs improvement.
+   - Shows recent submissions for the selected dog.
+   - Provides navigation to History, Education, Edit Profile, and Vet Finder.
+
+6. AddDogPage
+   - Adds a new dog profile.
+   - Requires at least a name and breed.
+   - Accepts age in years and months, then converts that to total months.
+   - Uses validation to reject empty or invalid values.
+   - Saves the dog through DogService and closes the page after success.
+
+7. DogProfilePage
+   - Shows and edits a single dog's information.
+   - Prefills the form with the selected dog's current values.
+   - Allows the user to update name, breed, and age.
+   - Supports deleting the dog after confirmation.
+   - From here, the user can continue to image upload for analysis.
+
+8. ImageUploadPage
+   - Lets the user upload four required dog photos from the gallery.
+   - Stores separate images for front, left, right, and back views.
+   - Tracks upload progress for each angle.
+   - Sends the selected dog and images to ResultsPage for analysis.
+
+9. CameraCapturePage
+   - Uses the browser camera on web.
+   - Requests camera permission and opens the available video devices.
+   - Prefers the back camera when possible.
+   - Supports switching between cameras and toggling the flashlight if available.
+   - Captures the image for the requested angle and returns it to the scan flow.
+
+10. ResultsPage
+   - Displays the scan result after the four images are processed.
+   - Runs the analysis flow for new uploads, or loads a saved result in read-only mode from HistoryPage.
+   - Shows the diagnosis, red flags, angle flags, and the uploaded images.
+   - Stores and retrieves result data through the storage and dog services.
+   - Supports rating the result, sharing it, and downloading it.
+   - Can open VetFinderPage when the result suggests veterinary follow-up.
+
+11. HistoryPage
+   - Shows past analysis results for the selected dog.
+   - Groups records by month and supports sorting newest or oldest first.
+   - Filters records by all, normal, or caution.
+   - Opens a past record in ResultsPage using read-only mode.
+   - Helps the user compare current and previous scans.
+
+12. EducationPage
+   - Provides educational content about dog sitting posture and how to use the app.
+   - Uses tabs so the user can switch between posture guidance and usage instructions.
+   - Explains what healthy and unhealthy posture patterns can look like.
+
+13. VetFinderPage
+   - Helps the user find veterinarians near their current location.
+   - Requests browser location access and uses the Google Maps embed view.
+   - Shows different states for loading, denied permission, timeout, and general errors.
+   - Includes a retry option and can open Google Maps in a new tab.
+
+14. EditProfilePage
+   - Lets the user update personal profile details after signup.
+   - Loads existing values from Firestore and animates the form on entry.
+   - Validates phone number, environment, region, and city before saving.
+   - Saves the updated profile back to Firestore through AuthService.
+
+Navigation and Support Files
+- main.dart controls the app startup, Firebase setup, authentication gate, and routing.
+- homepage_web.dart re-exports homepage.dart so web uses the same home screen logic.
+- verificationPopUp.dart is used during account verification flows.
+- Services under lib/services handle authentication, dog records, Firestore access, storage, ML analysis, and photo quality checks.
+
+In short
+The app starts with authentication, forces account verification and profile completion when needed, then sends the user to a dashboard where they can manage dogs, capture or upload posture photos, review results, view history, read guidance, and find a vet.

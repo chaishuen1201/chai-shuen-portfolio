@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Projects — Chaishuen's Portfolio">
+  <title>Projects — Chaishuen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0f;
+      --bg-2: #141417;
+      --bg-3: #1a1a1f;
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
+      --text: #f0ede8;
+      --text-muted: #888882;
+      --text-dim: #555550;
+      --accent: #c8f55a;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,15,0.85);
+    }
+
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .site-header .logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .site-header .logo span { color: var(--accent); }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    nav a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    nav a.active { color: var(--accent); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 5rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fadeUp 0.6s 0.1s both;
+    }
+
+    .page-header .eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      animation: fadeUp 0.7s 0.2s both;
+    }
+
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 480px;
+      animation: fadeUp 0.7s 0.3s both;
+    }
+
+    /* ── PROJECTS LIST ── */
+    .projects-list {
+      padding: 4rem 0 6rem;
+    }
+
+    .project-entry {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+
+    .project-entry.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .project-entry:last-child {
+      border-bottom: none;
+    }
+
+    .project-entry:nth-child(even) {
+      direction: rtl;
+    }
+
+    .project-entry:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .project-img-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      aspect-ratio: 16/10;
+      background: var(--bg-3);
+    }
+
+    .project-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .project-entry:hover .project-img-wrap img {
+      transform: scale(1.03);
+    }
+
+    .project-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-3);
+    }
+
+    /* ── PROJECT TEXT ── */
+    .project-text .num {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-text h2 {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .project-text p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
+    .project-gallery {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .shot {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: visible;
+      background: var(--bg-3);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .shot img {
+      display: block;
+      width: 100%;
+      height: auto; /* show full image height so bottom isn't cropped */
+      object-fit: contain;
+      object-position: top;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .shot figcaption {
+      padding: 0.6rem 0.8rem; /* tighter caption spacing below image */
+      margin-top: 0;
+    }
+
+    .shot figcaption strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.88rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .shot figcaption p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .walkthrough-intro {
+      margin-top: 0.85rem;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      max-width: 68ch;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0d0d0f;
+    }
+
+    .btn-primary:hover {
+      background: #d4f96e;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-hover);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+    .site-footer .inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .site-footer p {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 800px) {
+      .project-entry,
+      .project-entry:nth-child(even) {
+        grid-template-columns: 1fr;
+        direction: ltr;
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="index.html">Chai<span>.</span></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="resume.md">Résumé</a>
+        <a href="https://github.com/chaishuen1201" target="_blank">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <div class="container">
+        <div class="eyebrow">Selected Work</div>
+        <h1>Projects</h1>
+        <p>A collection of applications I've built — from mobile to web to blockchain.</p>
+      </div>
+    </div>
+
+    <section class="projects-list">
+      <div class="container">
+
+        <!-- Canine Care -->
+        <article class="project-entry" id="canine-care-overview">
+          <div class="project-img-wrap">
+            <img src="Canine%20Care%20Screenshot/CanineCare%20Main%20Photo.png" alt="Canine Care app homepage"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="project-img-placeholder" style="display:none">
+              <svg width="56" height="56" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            </div>
+          </div>
+          <div class="project-text">
+            <p class="num">01 — Mobile</p>
+            <h2>Canine Care</h2>
+            <p>A Flutter application for dog posture analysis and profile management. Users upload four-angle photos for analysis, track health history, browse educational content, and find nearby vets — all backed by Firebase Auth and Firestore.</p>
+            <div class="tag-list">
+              <span class="tag">Flutter</span>
+              <span class="tag">Dart</span>
+              <span class="tag">Firebase Auth</span>
+              <span class="tag">Firestore</span>
+              <span class="tag">Image Analysis</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-primary" href="canine-care-details.html">Open Canine Care Walkthrough</a>
+            </div>
+          </div>
+        </article>
+        
+
+        <!-- CRM -->
+        <article class="project-entry" id="crm">
+          <div class="project-img-wrap">
+            <img src="CRM%20Screenshot/Main.png" alt="CRM sales dashboard"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="project-img-placeholder" style="display:none">
+              <svg width="56" height="56" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            </div>
+          </div>
+          <div class="project-text">
+            <p class="num">02 — Web</p>
+            <h2>CRM System</h2>
+            <p>A web-based CRM built for sales reps and admins. Features dual-role dashboards, full lead lifecycle management, interaction history logging, calendar-based follow-up scheduling, and exportable report generation.</p>
+            <div class="tag-list">
+              <span class="tag">Web</span>
+              <span class="tag">Dashboard</span>
+              <span class="tag">Lead Management</span>
+              <span class="tag">Calendar</span>
+              <span class="tag">Reports</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-primary" href="crm-details.html">Open CRM Walkthrough</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- ESG Trust -->
+        <article class="project-entry" id="esg">
+          <div class="project-img-wrap">
+            <img src="ESG%20Trust/Main.png" alt="ESG Trust report"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="project-img-placeholder" style="display:none">
+              <svg width="56" height="56" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.12)" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            </div>
+          </div>
+          <div class="project-text">
+            <p class="num">03 — Blockchain</p>
+            <h2>ESG Trust</h2>
+            <p>A blockchain-based ESG supply chain transparency platform. Suppliers onboard via wallet login, submit ESG reports with on-chain hash anchoring, while off-chain data is stored securely. Enables verifiable, tamper-proof sustainability reporting.</p>
+            <div class="tag-list">
+              <span class="tag">Blockchain</span>
+              <span class="tag">Smart Contracts</span>
+              <span class="tag">Wallet Auth</span>
+              <span class="tag">ESG</span>
+              <span class="tag">Supply Chain</span>
+            </div>
+            <div class="project-links">
+              <a class="btn btn-primary" href="esg-details.html">Open ESG Walkthrough</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="inner">
+        <p>© 2026 Chaishuen</p>
+        <div class="footer-links">
+          <a href="https://github.com/chaishuen1201" target="_blank">GitHub</a>
+          <a href="resume.md">Résumé</a>
+          <a href="index.html">Home</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const entries = document.querySelectorAll('.project-entry');
+    const obs = new IntersectionObserver((items) => {
+      items.forEach(item => {
+        if (item.isIntersecting) {
+          item.target.classList.add('visible');
+          obs.unobserve(item.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    entries.forEach(e => obs.observe(e));
+
+    const overview = document.getElementById('canine-care-overview');
+    const details = document.getElementById('canine-care-details');
+    document.querySelector('[data-open-walkthrough="canine-care-details"]')?.addEventListener('click', () => {
+      overview.classList.add('is-hidden');
+      details.classList.remove('is-hidden');
+      details.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.querySelector('[data-close-walkthrough="canine-care-details"]')?.addEventListener('click', () => {
+      details.classList.add('is-hidden');
+      overview.classList.remove('is-hidden');
+      overview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  </script>
+
+</body>
+</html>

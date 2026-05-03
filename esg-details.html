@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ESG Trust — Details</title>
+  <style>
+    :root{--bg:#0d0d0f;--bg-3:#1a1a1f;--text:#f0ede8;--text-muted:#888882;--border:rgba(255,255,255,0.08);--font-body:Arial, sans-serif}
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body)}
+    .container{max-width:1100px;margin:0 auto;padding:2rem}
+    .back-button{position:fixed;left:18px;top:18px;z-index:200;background:transparent;color:var(--text);border:1px solid var(--border);padding:.5rem .8rem;border-radius:8px;text-decoration:none}
+    .page-title h1{font-size:2rem;margin:0 0 0.5rem}
+    .project-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
+    .shot{background:var(--bg-3);border:1px solid var(--border);border-radius:10px;overflow:visible;display:flex;flex-direction:column}
+    .shot img, .shot video{width:100%;height:auto;display:block}
+    .shot.video{grid-column:1 / -1}
+    .shot.video video{max-height:720px;height:auto;object-fit:contain;background:#000}
+    .shot figcaption{padding:.6rem .8rem;color:var(--text-muted)}
+    .shot figcaption{padding:.6rem .8rem;color:var(--text-muted);border-top:1px solid var(--border)}
+    .shot figcaption strong{display:block;color:var(--text);margin-bottom:.3rem}
+    @media(max-width:800px){.project-gallery{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <a class="back-button" href="projects.html">← Back</a>
+  <div class="container">
+    <div class="page-title">
+      <h1>ESG Trust — Walkthrough</h1>
+    </div>
+    <p style="color:var(--text-muted);max-width:70ch">Key screens and demo for the ESG Trust supply chain app. The demo video shows anchoring and report flows; screenshots show report generation and chatbot UI.</p>
+
+    <div class="project-gallery">
+      <figure class="shot video"><video controls src="ESG%20Trust/DEMO.mp4"></video><figcaption><strong>Demo</strong><p>Short demo video illustrating wallet login, supplier onboarding, and report anchoring.</p></figcaption></figure>
+      <figure class="shot"><img src="ESG%20Trust/ChatBot.png" alt="Chat Bot"><figcaption><strong>ChatBot</strong><p>Contextual chatbot for guiding users through ESG reporting and queries.</p></figcaption></figure>
+      <figure class="shot"><img src="ESG%20Trust/Report%20Generated.png" alt="Report Generated"><figcaption><strong>Report</strong><p>Generated ESG report summary showing on-chain anchor status and details.</p></figcaption></figure>
+    </div>
+
+    <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);max-width:70ch">
+      <h2 style="font-size:1.5rem;margin-bottom:1rem">Technical Highlights</h2>
+      <ul style="color:var(--text-muted);line-height:1.8">
+        <li><strong>Blockchain integration:</strong> MetaMask wallet login; smart contracts manage supplier approval and role detection.</li>
+        <li><strong>On-chain anchoring:</strong> Report hash is anchored to a blockchain (DCAI) for immutable proof of submission and timestamp.</li>
+        <li><strong>Off-chain storage:</strong> Full report data stored in external services for privacy and scalability; only hash anchored on-chain.</li>
+        <li><strong>Dual workspaces:</strong> Company users manage suppliers and review reports; supplier users submit ESG evidence and track submissions.</li>
+        <li><strong>Evidence management:</strong> File uploads with validation; stored separately from blockchain for easy retrieval and audit.</li>
+        <li><strong>Supply chain traceability:</strong> Companies can verify supplier credentials and report history; creates transparent ESG accountability.</li>
+      </ul>
+    </div>
+
+    <p style="margin-top:1rem"><a style="color:var(--text-muted);text-decoration:underline" href="ESG%20Trust/Project%20Description.txt" target="_blank">Open full project description</a></p>
+  </div>
+</body>
+</html>
