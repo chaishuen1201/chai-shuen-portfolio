@@ -20,4 +20,4 @@ git remote add origin https://github.com/chaishuen1201/chaishuen1201.github.io.g
 git push -u origin main
 ```
 
-After pushing, GitHub Pages will publish the site at `https://chaishuen1201.github.io/`.
+After pushing, GitHub Pages will publish the site at `https://chaishuen1201.github.io/](https://chaishuen1201.github.io/chai-shuen-portfolio/`.
