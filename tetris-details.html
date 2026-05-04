@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tetris — Walkthrough</title>
+  <style>
+    :root{--bg:#0d0d0f;--panel:#0f0f11;--accent:#c8f55a;--text:#eaeaea;--text-muted:#9a9a95;--border:rgba(255,255,255,0.06)}
+    html,body{height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    .container{max-width:980px;margin:0 auto;padding:48px 20px}
+    .back-button{position:fixed;left:18px;top:18px;z-index:200;background:transparent;border:1px solid var(--border);color:var(--text);padding:.5rem .6rem;text-decoration:none}
+    .page-title h1{font-size:1.6rem;margin:0 0 0.5rem}
+    .project-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
+    .shot{background:var(--panel);overflow:visible;border-radius:6px}
+    .shot img{width:100%;height:auto;display:block}
+    .shot figcaption{padding:.6rem .8rem;border-top:1px solid var(--border);color:var(--text-muted)}
+    .shot figcaption strong{display:block;color:var(--text);margin-bottom:.25rem}
+    @media(max-width:800px){.project-gallery{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <a class="back-button" href="projects.html">← Back</a>
+  <div class="container">
+    <div class="page-title">
+      <h1>Tetris — Walkthrough</h1>
+    </div>
+    <p style="color:var(--text-muted);max-width:70ch">Screenshots and highlights for the Tetris project. Click images to open full-size files in the repository.</p>
+
+    <div class="project-gallery">
+      <figure class="shot"><img src="Tetris%20Game/Main Menu.png" alt="Main Menu"><figcaption><strong>Main Menu</strong><p>Title screen, start options and mode selection.</p></figcaption></figure>
+      <figure class="shot"><img src="Tetris%20Game/Setting.png" alt="Settings"><figcaption><strong>Settings</strong><p>Controls, audio and visual options configurable per player.</p></figcaption></figure>
+      <figure class="shot"><img src="Tetris%20Game/Singleplayer%20Game%20Screen.png" alt="Singleplayer"><figcaption><strong>Singleplayer</strong><p>Core gameplay with active piece, next queue, and score panel.</p></figcaption></figure>
+      <figure class="shot"><img src="Tetris%20Game/Singleplayer%20Game%20Over%20Screen.png" alt="Game Over"><figcaption><strong>Game Over</strong><p>Score summary and high-score entry.</p></figcaption></figure>
+      <figure class="shot"><img src="Tetris%20Game/Muiltiplayer%20Ready%20Panel.png" alt="Multiplayer Ready"><figcaption><strong>Multiplayer — Ready</strong><p>Lobby and ready panel for multiplayer matches.</p></figcaption></figure>
+      <figure class="shot"><img src="Tetris%20Game/Multiplayer%20game%20Screen.png" alt="Multiplayer Game"><figcaption><strong>Multiplayer — Game</strong><p>Real-time multiplayer play with leaderboards and garbage lines.</p></figcaption></figure>
+      <figure class="shot"><img src="Tetris%20Game/Multiplayer%20Winning%20Screen.png" alt="Winning"><figcaption><strong>Multiplayer — Winning</strong><p>Match results and victory screen for the winner.</p></figcaption></figure>
+    </div>
+
+    <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);max-width:70ch">
+      <h2 style="font-size:1.5rem;margin-bottom:1rem">Technical Highlights</h2>
+      <ul style="color:var(--text-muted);line-height:1.8">
+        <li><strong>Game loop:</strong> Deterministic main loop with fixed timestep for consistent physics and input across devices.</li>
+        <li><strong>Piece rotation:</strong> Super Rotation System (SRS) with wall-kick implementation for predictable rotation behavior.</li>
+        <li><strong>Collision & line clear:</strong> Efficient grid-based collision detection and optimized line-clear batching to avoid frame hitches.</li>
+        <li><strong>Scoring & progression:</strong> Level-based speed increase, combo tracking, and configurable scoring rules for single and multiplayer modes.</li>
+        <li><strong>Input handling:</strong> Debounced keyboard/touch controls with repeat-rate handling and configurable control mapping.</li>
+        <li><strong>Multiplayer sync:</strong> Peer matchmaking with authoritative server messages for garbage lines and match state reconciliation.</li>
+      </ul>
+    </div>
+
+    <p style="margin-top:1rem"><a style="color:var(--text-muted);text-decoration:underline" href="Tetris%20Game/Project%20Description.txt" target="_blank">Open project description</a></p>
+
+  </div>
+</body>
+</html>

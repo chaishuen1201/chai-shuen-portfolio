@@ -1,0 +1,132 @@
+CW2025 Tetris Game Introduction
+
+This project is a JavaFX Tetris game built around a single FXML layout and a central GUI controller.
+The application starts in com.comp2042.Main, which loads gameLayout.fxml and creates the main game window.
+From there, the GuiController coordinates the visible screens, the game state, audio, keyboard input, timers, and the different game modes.
+
+1. Game Overview
+
+The game follows the classic Tetris idea: bricks fall into a 10-column board, the player moves and rotates them, fills lines, and tries to survive as long as possible.
+The project supports both single player and multiplayer gameplay.
+Single player focuses on survival, scoring, and high scores.
+Multiplayer adds side-by-side competition, ready-up behavior, garbage lines, and a winner screen.
+
+The main game board is rendered in the center of the window.
+The left side shows hold, score, level, and line count.
+The right side shows next bricks and a timer.
+Additional panels appear on top of the board when the player is at the main menu, paused, viewing settings, reaching game over, or finishing a multiplayer match.
+
+2. Main Pages and Screens
+
+Main Menu
+The main menu is the first page shown on top of the game board.
+It is used to start single player mode, start multiplayer mode, open settings, or exit the application.
+It acts as the entry point for navigation before any match begins.
+
+Single Player Screen
+This is the normal gameplay page for one player.
+It contains the active board, falling brick, ghost preview, hold box, next brick preview, score, level, lines, and timer.
+The player uses the assigned controls to move, rotate, drop, or hold bricks while trying to clear rows.
+
+Multiplayer Screen
+This screen is used when two players compete on the same computer.
+The game arranges two player boards side by side and keeps both matches synchronized.
+Each player has separate controls, separate progress, and separate statistics.
+The mode also supports ready status, garbage sending, and a win/loss result screen.
+
+Settings Panel
+The settings page lets the player change volume and key bindings.
+It is used for both single player and multiplayer controls.
+The changes are stored so the chosen settings remain available after the game is reopened.
+
+Pause Panel
+The pause page appears when the player pauses the match.
+It freezes gameplay and offers options such as resume, restart, open settings, or return to the main menu.
+The pause screen keeps the current board state intact until the player continues.
+
+Game Over Panel
+The game over page appears when the current player can no longer create a new brick.
+It shows the final result and gives the player a way to play again or return to the main menu.
+The panel also works with the high score system so the player can see how the match compares to previous results.
+
+Winning Panel
+The winning page appears in multiplayer mode when one player loses and the other wins.
+It is the end-of-match result screen for two-player games.
+It helps show who won the round and gives the players a chance to restart or exit to the main menu.
+
+Notification Area
+The notification group is a lightweight overlay used for short messages and gameplay feedback.
+It is useful for temporary prompts and visual alerts without replacing the whole screen.
+
+Countdown Label
+The countdown appears before a match starts, especially in single player and multiplayer start flow.
+It gives the player a short ready period before the first brick begins to fall.
+
+3. Core Features and How They Work
+
+Brick Movement and Rotation
+The falling brick can move left, right, and down, rotate, hard drop, or be held.
+The controller receives input events and asks the board model to validate and perform the move.
+If a move is legal, the view is updated immediately.
+If a move is not possible, the brick is locked into the board and a new brick is created.
+
+Hold Brick
+The hold feature allows the player to store the current brick and bring back a stored brick later.
+This helps with planning and can save a difficult situation.
+The hold panel shows the stored shape so the player can see what is available.
+
+Next Brick Preview
+The next panel displays upcoming bricks before they appear on the board.
+This lets the player plan several moves ahead instead of reacting to one piece at a time.
+The project shows multiple upcoming pieces so the preview is more useful.
+
+Ghost Piece
+The ghost piece shows where the current brick will land if dropped straight down.
+It is drawn as a transparent preview under the active brick.
+The ghost updates whenever the piece moves or rotates, so the landing position stays accurate.
+
+Score, Lines, and Level
+The score increases when the player clears rows or performs certain actions such as soft dropping.
+The line counter tracks how many rows have been removed.
+The level increases as the player clears more lines, which makes the game faster and harder.
+These values are shown in the side panel so the player can track progress in real time.
+
+Timer
+The timer measures how long the current session has been running.
+It is shown on the right side of the screen and gives the player a time-based record of the match.
+
+Audio
+The game includes sound effects and background music for menus and gameplay events.
+Audio is managed separately from the main board logic so the interface and sound state stay synchronized.
+
+Key Bindings
+The controls are configurable through the settings screen.
+The game reads the selected keys and uses them during input handling, so the player can customize movement, rotation, drop, and hold actions.
+Multiplayer has separate bindings for each player.
+
+4. Single Player Flow
+
+Single player begins from the main menu.
+When the game starts, the board is initialized, a first brick is created, and the UI shows the hold box, next preview, score, level, lines, and timer.
+The player clears rows to score points and raise the level.
+When the board fills up and a new brick cannot spawn, the game over panel appears.
+
+5. Multiplayer Flow
+
+Multiplayer starts from the main menu and creates two active game controllers.
+Each side has its own board state, preview, score, level, and line counter.
+The ready system makes both players confirm before the match begins.
+When rows are cleared, the game can send garbage lines to the opponent, which adds pressure and makes the match competitive.
+When one player loses, the winning panel appears and ends the round.
+
+6. Internal Structure
+
+The project is organized so the board model handles gameplay rules, the GUI controller handles screen switching and coordination, and the view classes handle drawing the actual panels.
+This separation keeps the game easier to maintain.
+It also means the board logic, screen logic, and input logic can change without forcing the whole project to be rewritten.
+
+7. Summary
+
+CW2025 is a feature-rich Tetris game with a clean menu system, configurable controls, single player and multiplayer modes, and several support features that make the gameplay easier to follow.
+The main screens guide the player through starting a match, playing the game, pausing, changing settings, and seeing the final result.
+The result is a complete Tetris experience with modern JavaFX UI structure and clear separation between gameplay, view, and control logic.
