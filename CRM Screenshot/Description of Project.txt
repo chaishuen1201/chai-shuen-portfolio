@@ -1,0 +1,655 @@
+================================================================================
+                    ABB ROBOTICS CRM SYSTEM - PROJECT DESCRIPTION
+================================================================================
+
+PROJECT OVERVIEW:
+================================================================================
+The ABB Robotics CRM (Customer Relationship Management) System is a comprehensive
+web-based application designed to manage customer relationships, sales operations,
+leads tracking, and business interactions. Built with PHP and MySQL, this system
+enables organizations to efficiently track, manage, and optimize their customer
+interactions and sales processes.
+
+Database: COMP1044_Database
+Technology Stack: PHP, MySQL, HTML5, CSS3, JavaScript
+Server: Local MySQL Server (localhost:3306)
+
+KEY FEATURES:
+================================================================================
+1. USER AUTHENTICATION & ROLE-BASED ACCESS
+   - Secure login and signup functionality with password hashing
+   - Two user roles: Admin and Sales Representatives
+   - Session-based authentication
+   - User profile management and editing capabilities
+   - Password recovery options
+
+2. CUSTOMER MANAGEMENT
+   - Add, view, edit, and delete customers
+   - Store customer information (name, contact details, etc.)
+   - Sales history tracking per customer
+   - Customer data retrieval and search functionality
+   - Interaction history tracking with customers
+
+3. LEADS MANAGEMENT
+   - Add, view, edit, and delete sales leads
+   - Lead tracking and conversion workflow
+   - Follow-up management for leads
+   - Interaction history for each lead
+   - Search and filter lead functionality
+
+4. SALES MANAGEMENT
+   - Record and track sales transactions
+   - Add new sales records with customer information
+   - Edit and delete sales entries
+   - Sales history per customer
+   - Sale processing workflow
+
+5. FOLLOW-UP MANAGEMENT
+   - Create and manage follow-up reminders/tasks
+   - Set follow-up dates and status tracking
+   - Edit and delete follow-ups
+   - Real-time notifications for upcoming follow-ups
+   - Follow-up retrieval for specific customers or leads
+
+6. INTERACTION HISTORY TRACKING
+   - Record all customer and lead interactions
+   - Edit interaction records
+   - Delete interaction entries
+   - Search interactions by customer or lead
+   - Admin view of all interactions
+   - Individual user interaction history
+
+7. DASHBOARD & REPORTING
+   - Admin dashboard with system overview
+   - Sales dashboard for sales representatives
+   - Graphical reports and analytics
+   - Performance metrics visualization
+   - Sales graphs and trends
+
+8. SALES REPRESENTATIVE MANAGEMENT (Admin)
+   - Manage sales representatives
+   - Search and filter sales representatives
+   - Add/Edit/Delete representative profiles
+
+================================================================================
+DETAILED PAGE STRUCTURE & FUNCTIONALITY:
+================================================================================
+
+ROOT LEVEL FILES:
+================================================================================
+
+1. index.php (LOGIN PAGE)
+   Purpose: Main entry point and authentication page
+   Features:
+   - ABB Robotics branded login interface
+   - Email and password input fields
+   - Forgot password link
+   - Sign-up link for new users
+   - Logo and company branding
+   - Session initiation
+   - Authentication form submission to server.php
+
+2. signup.php (REGISTRATION PAGE)
+   Purpose: User registration and account creation
+   Features:
+   - New user registration form
+   - Input fields for First Name, Last Name, Email, Phone Number, Password
+   - Role selection (Admin/Sales Representative)
+   - Account creation processing
+   - Link to login page for existing users
+   - Form validation
+
+3. server.php (BACKEND CONFIGURATION & DATABASE)
+   Purpose: Central server configuration and authentication handling
+   Features:
+   - MySQL database connection management
+   - Database: COMP1044_Database
+   - Server credentials and connection error handling
+   - Signup processing logic
+   - Login verification and validation
+   - User ID generation with role-based prefixes (ad=Admin, sl=Sales Rep)
+   - Session management
+   - Authentication business logic
+
+4. admin_contact.php (ADMIN CONTACT/SUPPORT PAGE)
+   Purpose: Contact support or password recovery
+   Features:
+   - Admin contact information
+   - Password reset request functionality
+   - Support ticket submission (if implemented)
+   - Contact form processing
+
+================================================================================
+DASHBOARD FOLDER (/Dashboard/)
+================================================================================
+
+1. dashboard.php (MAIN DASHBOARD)
+   Purpose: Central hub for system overview and navigation
+   Features:
+   - Role-based dashboard (Admin vs Sales Rep view)
+   - System overview and statistics
+   - Quick links to main modules
+   - User notifications and alerts
+   - Performance metrics
+   - Navigation menu to all system features
+   - Real-time notification system for pending follow-ups
+
+2. edit_profile.php (USER PROFILE EDITING)
+   Purpose: Allow users to update their profile information
+   Features:
+   - Edit user details (name, email, phone)
+   - Profile photo/avatar management
+   - Password change functionality
+   - Profile information validation
+   - Save changes to database
+
+================================================================================
+CUSTOMERS FOLDER (/Customers/)
+================================================================================
+
+1. customers.php (CUSTOMER LIST PAGE)
+   Purpose: Display all customers and manage customer data
+   Features:
+   - View all customers in a table/list format
+   - Search customer functionality
+   - Add new customer button
+   - Edit customer link
+   - Delete customer option
+   - Customer information display (name, contact, etc.)
+   - Pagination (if applicable)
+
+2. add_customer.php (ADD NEW CUSTOMER)
+   Purpose: Create new customer records
+   Features:
+   - Form to input new customer information
+   - Fields: Customer Name, Email, Phone, Address, etc.
+   - Form validation
+   - Data submission to database
+   - Success/error messages
+   - Redirect to customers list after creation
+
+3. edit_customer.php (EDIT CUSTOMER INFORMATION)
+   Purpose: Modify existing customer details
+   Features:
+   - Load customer data into editable form
+   - Edit all customer fields
+   - Form validation
+   - Update database records
+   - Save changes functionality
+   - Cancel/Go back option
+
+4. delete_customer.php (DELETE CUSTOMER)
+   Purpose: Remove customer records from system
+   Features:
+   - Delete confirmation
+   - Remove customer from database
+   - Cascade delete related sales/interactions
+   - Success notification
+   - Redirect to customers list
+
+5. get_customer_data.php (CUSTOMER DATA RETRIEVAL)
+   Purpose: Fetch customer data via AJAX/API call
+   Features:
+   - Retrieve specific customer information
+   - Return customer data in JSON format
+   - Support for dynamic loading
+   - Used by other pages for customer lookup
+
+6. get_customer_sales.php (CUSTOMER SALES HISTORY)
+   Purpose: Retrieve sales records for a specific customer
+   Features:
+   - Fetch all sales transactions for a customer
+   - Return sales data including amounts, dates, products
+   - Support for filtering and sorting
+   - Used in customer detail views
+
+7. add_sale.php (ADD NEW SALE)
+   Purpose: Record new sales transactions
+   Features:
+   - Form to record sale information
+   - Customer selection dropdown
+   - Product/Service selection
+   - Sale amount and date input
+   - Commission calculation (if applicable)
+   - Form submission and validation
+
+8. salesHistory.php (CUSTOMER SALES HISTORY VIEW)
+   Purpose: Display all sales transactions for a customer
+   Features:
+   - List all sales for selected customer
+   - Display sale details (date, amount, product, etc.)
+   - Edit sale link
+   - Delete sale option
+   - Sales totals and statistics
+   - Filter and search functionality
+
+9. delete_sale.php (DELETE SALE RECORD)
+   Purpose: Remove sale transactions
+   Features:
+   - Delete confirmation
+   - Remove sale from database
+   - Update customer statistics
+   - Success notification
+
+10. process_sale.php (SALE PROCESSING)
+    Purpose: Handle sale form submissions and data processing
+    Features:
+    - Process form data from add_sale.php
+    - Validate sale information
+    - Insert/update sale records in database
+    - Return status and messages
+    - Redirect after processing
+
+11. interaction_history_customer.php (CUSTOMER INTERACTIONS)
+    Purpose: View all interactions with a specific customer
+    Features:
+    - Display interaction timeline
+    - Show interaction details (date, type, notes)
+    - Add new interaction button
+    - Edit/delete interaction options
+    - Chronological ordering
+
+================================================================================
+LEADS FOLDER (/Leads/)
+================================================================================
+
+1. leads.php (LEADS LIST PAGE)
+    Purpose: Display all sales leads and manage lead pipeline
+    Features:
+    - View all leads in list/table format
+    - Search and filter leads
+    - Lead status display (New, Contacted, Qualified, etc.)
+    - Add new lead button
+    - Edit lead option
+    - Delete lead option
+    - Lead scoring/ranking (if applicable)
+
+2. add_lead.php (ADD NEW LEAD)
+    Purpose: Create new lead records
+    Features:
+    - Form to input lead information
+    - Fields: Full Name, Email, Phone, Company, etc.
+    - Lead source selection
+    - Lead priority/rating
+    - Form validation
+    - Database insertion
+
+3. edit_lead.php (EDIT LEAD INFORMATION)
+    Purpose: Modify existing lead details
+    Features:
+    - Pre-load lead data into form
+    - Edit all lead fields
+    - Update lead status
+    - Change lead assignment (if applicable)
+    - Update database records
+    - Success/error feedback
+
+4. delete_lead.php (DELETE LEAD)
+    Purpose: Remove lead records from system
+    Features:
+    - Delete confirmation
+    - Remove lead from database
+    - Clean up related records
+    - Success notification
+
+5. get_lead_data.php (LEAD DATA RETRIEVAL)
+    Purpose: Fetch lead information via AJAX
+    Features:
+    - Retrieve specific lead details
+    - Return data in JSON format
+    - Support for dynamic loading
+    - Used by other modules
+
+6. get_lead.php (GET LEAD DETAILS)
+    Purpose: Retrieve comprehensive lead information
+    Features:
+    - Fetch all lead details
+    - Include interaction history
+    - Include follow-up information
+    - Return formatted data
+
+7. interaction_history_lead.php (LEAD INTERACTIONS)
+    Purpose: View all interactions with a specific lead
+    Features:
+    - Display interaction timeline
+    - Show interaction details and notes
+    - Add new interaction
+    - Edit/delete interactions
+    - Sort by date
+
+8. follow_up_lead.php (FOLLOW-UP FOR LEAD)
+    Purpose: Create or manage follow-ups for a lead
+    Features:
+    - Create new follow-up reminder
+    - Set follow-up date and time
+    - Add follow-up notes
+    - Link follow-up to lead
+    - Database storage of follow-up
+
+9. search_leads.php (SEARCH LEADS)
+    Purpose: Search and filter lead records
+    Features:
+    - Search by lead name, email, phone
+    - Filter by lead status, source, priority
+    - Return matching leads
+    - Used by AJAX for dynamic search
+
+================================================================================
+FOLLOW-UP FOLDER (/Followup/)
+================================================================================
+
+1. followUp.php (FOLLOW-UP MANAGEMENT PAGE)
+    Purpose: Main follow-up management and view
+    Features:
+    - List all pending follow-ups
+    - Display follow-up details
+    - Filter by date, status, assigned user
+    - Add new follow-up button
+    - Edit/Delete follow-up options
+    - Mark follow-up as complete
+    - Priority indicators
+
+2. save_followup.php (SAVE FOLLOW-UP)
+    Purpose: Process and save follow-up records
+    Features:
+    - Handle form submission from follow-up creation
+    - Insert/update follow-up in database
+    - Link to customer or lead
+    - Set follow-up date/time
+    - Store follow-up notes
+    - Return status confirmation
+
+3. edit_followup.php (EDIT FOLLOW-UP)
+    Purpose: Modify existing follow-up records
+    Features:
+    - Load follow-up data into edit form
+    - Edit follow-up date, time, notes, status
+    - Update database records
+    - Return success/error messages
+
+4. delete_followup.php (DELETE FOLLOW-UP)
+    Purpose: Remove follow-up records
+    Features:
+    - Delete follow-up from database
+    - Confirmation check
+    - Return status message
+
+5. get_user_events.php (GET USER FOLLOW-UPS)
+    Purpose: Retrieve follow-up events for a user
+    Features:
+    - Fetch upcoming follow-ups
+    - Return in calendar-compatible format
+    - Filter by user
+    - Include follow-up details
+
+6. search_customers.php (SEARCH CUSTOMERS IN FOLLOW-UP)
+    Purpose: Search customers for follow-up assignment
+    Features:
+    - Search customer by name/email/phone
+    - Return customer list for selection
+    - Used for customer lookup in follow-up form
+
+7. search_leads.php (SEARCH LEADS IN FOLLOW-UP)
+    Purpose: Search leads for follow-up assignment
+    Features:
+    - Search lead by name/email/phone
+    - Return lead list for selection
+    - Used for lead lookup in follow-up form
+
+================================================================================
+INTERACTION HISTORY FOLDER (/InteractionHistory/)
+================================================================================
+
+1. admin_interaction.php (ADMIN INTERACTION VIEW)
+    Purpose: Admin view of all system interactions
+    Features:
+    - Display all interactions across all customers/leads
+    - Filter by user, date range, type
+    - Search interactions
+    - Edit/Delete options
+    - System-wide interaction tracking
+
+2. all_interaction.php (ALL INTERACTIONS LIST)
+    Purpose: Comprehensive interaction history view
+    Features:
+    - List all recorded interactions
+    - Interaction details (date, type, notes, with whom)
+    - Filter and search functionality
+    - Sort by date or other fields
+
+3. process_interaction.php (ADD NEW INTERACTION)
+    Purpose: Process and save new interaction records
+    Features:
+    - Handle interaction form submission
+    - Validate interaction data
+    - Insert into database
+    - Link to customer or lead
+    - Timestamp recording
+    - Success/error response
+
+4. delete_interaction.php (DELETE INTERACTION)
+    Purpose: Remove interaction records
+    Features:
+    - Delete from database
+    - Confirmation handling
+    - Success notification
+
+5. process_edit_interaction.php (UPDATE INTERACTION)
+    Purpose: Handle interaction modification
+    Features:
+    - Update existing interaction record
+    - Modify notes, date, type
+    - Validate changes
+    - Update database
+    - Return confirmation
+
+6. search_customers.php (SEARCH FOR CUSTOMER IN INTERACTION)
+    Purpose: Search customers for interaction logging
+    Features:
+    - Find customer by name/email
+    - Return customer list
+    - Used for customer selection in interaction form
+
+7. search_leads.php (SEARCH FOR LEADS IN INTERACTION)
+    Purpose: Search leads for interaction logging
+    Features:
+    - Find lead by name/email
+    - Return lead list
+    - Used for lead selection in interaction form
+
+8. search_person.php (SEARCH ANY PERSON)
+    Purpose: Generic person search for interactions
+    Features:
+    - Search across customers and leads
+    - Return all matching results
+    - Unified search functionality
+
+================================================================================
+REPORTS FOLDER (/Reports/)
+================================================================================
+
+1. ad_graphs.php (ADMIN REPORTS & GRAPHS)
+    Purpose: Admin dashboard with analytical visualizations
+    Features:
+    - Sales trends graphs and charts
+    - Performance metrics visualization
+    - Lead conversion rates
+    - Customer acquisition metrics
+    - Revenue analytics
+    - System statistics
+    - Date-range filtering
+
+2. sl_graphs.php (SALES REP REPORTS & GRAPHS)
+    Purpose: Individual sales representative performance view
+    Features:
+    - Personal sales metrics
+    - Individual performance graphs
+    - Commission calculations
+    - Lead conversion tracking
+    - Activity reports
+    - Goal achievement visualization
+
+================================================================================
+SALES REP MANAGEMENT FOLDER (/SalesRep/)
+================================================================================
+
+1. manageSalesRep.php (MANAGE SALES REPRESENTATIVES - ADMIN)
+    Purpose: Admin interface for managing sales representatives
+    Features:
+    - List all sales representatives
+    - Add new sales rep
+    - Edit sales rep information
+    - Delete sales rep
+    - Assign territories or quotas (if applicable)
+    - View rep performance metrics
+
+2. search_salesrep.php (SEARCH SALES REPRESENTATIVES)
+    Purpose: Search functionality for sales reps
+    Features:
+    - Search rep by name, email, ID
+    - Filter by status, department
+    - Return matching reps
+    - Used in sales rep assignment
+
+================================================================================
+HEADER & FOOTER FOLDER (/HeaderFooter/)
+================================================================================
+
+1. header.php (SHARED HEADER COMPONENT)
+    Purpose: Common header across all authenticated pages
+    Features:
+    - Navigation menu with role-based links
+    - User profile dropdown
+    - Logout functionality
+    - Notification system display
+    - Company branding (ABB Robotics)
+    - Active page highlighting
+    - Responsive navigation menu
+
+2. footer.php (SHARED FOOTER COMPONENT)
+    Purpose: Common footer across all pages
+    Features:
+    - Copyright information
+    - Company links
+    - Contact information
+    - Support links
+
+================================================================================
+CSS STYLING FOLDER (/css/)
+================================================================================
+
+The following CSS files provide styling for different sections:
+
+1. login.css - Login and signup page styling
+2. signup.css - Registration form styling
+3. common.css - Global/common styling
+4. header_footer2.css - Header and footer styling
+5. admin_dashboard.css - Admin dashboard styling
+6. sales_dashboard.css - Sales representative dashboard styling
+7. admin_customer.css - Admin customer management page styling
+8. sales_lead.css - Sales lead management styling
+9. lead.css - Lead details and forms styling
+10. salesTable.css - Sales records table styling
+11. sales_rep.css - Sales representative management styling
+12. interaction.css - Interaction history styling
+13. graphs.css - Reports and graphs visualization styling
+14. followUp.css - Follow-up management styling
+15. styles.css - Additional general styles
+
+================================================================================
+IMAGE FOLDER (/Image/)
+================================================================================
+Stores all images and assets used in the application:
+- Logo and branding images
+- User avatars/profile pictures
+- Illustrations for login/signup pages
+- Icons and graphics for UI elements
+- Company logos and banners
+
+================================================================================
+DATABASE STRUCTURE OVERVIEW:
+================================================================================
+The application uses MySQL database "COMP1044_Database" with tables:
+
+Key Tables:
+- Users: Stores user accounts, roles, authentication
+- Customers: Customer information and details
+- Leads: Lead prospects and pipeline
+- Sales: Sale transactions and records
+- FollowUp: Follow-up reminders and tasks
+- InteractionHistory: All customer/lead interactions
+- And supporting tables for relationships
+
+================================================================================
+USER ROLES & PERMISSIONS:
+================================================================================
+
+ADMIN ROLE (User ID prefix: ad)
+- Full system access
+- User management
+- Sales rep management
+- View all customers, leads, sales
+- Access admin reports and graphs
+- System configuration
+- Interaction history access (all)
+
+SALES REPRESENTATIVE ROLE (User ID prefix: sl)
+- Manage assigned customers
+- Manage assigned leads
+- Record sales transactions
+- Create and manage follow-ups
+- Log interactions
+- View personal performance reports
+- Edit own profile
+
+================================================================================
+SECURITY FEATURES:
+================================================================================
+- Password hashing using PHP's PASSWORD_DEFAULT algorithm
+- Session-based authentication
+- Role-based access control
+- SQL injection prevention via mysqli_real_escape_string
+- Input validation and sanitization
+- Secure form processing
+- Session timeout management
+
+================================================================================
+TECHNICAL SPECIFICATIONS:
+================================================================================
+- Server: Apache/PHP-enabled web server
+- Database: MySQL (localhost, default port 3306)
+- Database Credentials: 
+  Username: root
+  Password: root
+  Database: COMP1044_Database
+- Frontend: HTML5, CSS3, JavaScript
+- Backend: PHP
+- Session Management: PHP $_SESSION
+- Database Connection: MySQLi
+- Error Reporting: Enabled for debugging
+
+================================================================================
+MAIN WORKFLOWS:
+================================================================================
+
+1. USER LIFECYCLE:
+   Sign Up → Email Verification → Login → Dashboard → Profile Management
+
+2. SALES PIPELINE:
+   Add Lead → Track Interactions → Create Follow-ups → Convert to Sale → 
+   Record Sale → Manage Customer → Ongoing Interactions
+
+3. CUSTOMER LIFECYCLE:
+   Add Customer → Record Interactions → Create Follow-ups → Process Sales → 
+   View Sales History → Maintain Customer Records
+
+4. FOLLOW-UP WORKFLOW:
+   Create Follow-up → Set Date/Time → Receive Notifications → 
+   Complete Follow-up → Log Interaction
+
+5. REPORTING:
+   Dashboard → Generate Reports → View Graphs → Export Metrics
+
+================================================================================
+END OF PROJECT DESCRIPTION
+================================================================================
