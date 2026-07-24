@@ -3,51 +3,316 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ESG Trust — Details</title>
+  <title>ESG Trust — Cryptographic Supply Chain Ledger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0d0d0f;--bg-3:#1a1a1f;--text:#f0ede8;--text-muted:#888882;--border:rgba(255,255,255,0.08);--font-body:Arial, sans-serif}
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body)}
-    .container{max-width:1100px;margin:0 auto;padding:2rem}
-    .back-button{position:fixed;left:18px;top:18px;z-index:200;background:transparent;color:var(--text);border:1px solid var(--border);padding:.5rem .8rem;border-radius:8px;text-decoration:none}
-    .page-title h1{font-size:2rem;margin:0 0 0.5rem}
-    .project-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
-    .shot{background:var(--bg-3);border:1px solid var(--border);border-radius:10px;overflow:visible;display:flex;flex-direction:column}
-    .shot img, .shot video{width:100%;height:auto;display:block}
-    .shot.video{grid-column:1 / -1}
-    .shot.video video{max-height:720px;height:auto;object-fit:contain;background:#000}
-    .shot figcaption{padding:.6rem .8rem;color:var(--text-muted)}
-    .shot figcaption{padding:.6rem .8rem;color:var(--text-muted);border-top:1px solid var(--border)}
-    .shot figcaption strong{display:block;color:var(--text);margin-bottom:.3rem}
-    @media(max-width:800px){.project-gallery{grid-template-columns:1fr}}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0c;
+      --bg-2: #121216;
+      --bg-3: #181822;
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(200,245,90,0.2);
+      --text: #f4f4f6;
+      --text-muted: #94a3b8;
+      --accent: #c8f55a;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      padding-bottom: 5rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .site-header {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,12,0.8);
+      position: sticky;
+      top: 0;
+      z-index: 500;
+    }
+
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .site-header .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .site-header .logo span { color: var(--accent); }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .project-hero {
+      margin-bottom: 4rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3rem;
+    }
+
+    .project-meta-label {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-hero h1 {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 70ch;
+    }
+
+    .project-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .shot {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .shot.video {
+      grid-column: 1 / -1;
+    }
+
+    .shot:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .shot-img-ctx {
+      background: #14141a;
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .shot.video .shot-img-ctx {
+      aspect-ratio: 16/9;
+      background: #000;
+    }
+
+    .shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .shot video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .shot figcaption {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .shot figcaption strong {
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .shot figcaption p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .tech-specs {
+      background: linear-gradient(135deg, var(--bg-2) 0%, #0e0e12 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .tech-specs h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .spec-item strong {
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .spec-item p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    @media(max-width: 768px){
+      .tech-specs { padding: 2rem; }
+    }
   </style>
 </head>
 <body>
-  <a class="back-button" href="projects.html">← Back</a>
-  <div class="container">
-    <div class="page-title">
-      <h1>ESG Trust — Walkthrough</h1>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="index.html">Chai<span>.</span></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="projects.html" class="active">Projects</a>
+      </nav>
     </div>
-    <p style="color:var(--text-muted);max-width:70ch">Key screens and demo for the ESG Trust supply chain app. The demo video shows anchoring and report flows; screenshots show report generation and chatbot UI.</p>
+  </header>
+
+  <div class="container">
+    <div class="project-hero">
+      <p class="project-meta-label">Decentralized Trust Mechanics</p>
+      <h1>ESG Trust</h1>
+      <p class="project-desc">A blockchain-anchored data supply framework validating immutable corporate sustainability records, environmental disclosures, and supplier compliance protocols.</p>
+    </div>
 
     <div class="project-gallery">
-      <figure class="shot video"><video controls src="ESG%20Trust/DEMO.mp4"></video><figcaption><strong>Demo</strong><p>Short demo video illustrating wallet login, supplier onboarding, and report anchoring.</p></figcaption></figure>
-      <figure class="shot"><img src="ESG%20Trust/ChatBot.png" alt="Chat Bot"><figcaption><strong>ChatBot</strong><p>Contextual chatbot for guiding users through ESG reporting and queries.</p></figcaption></figure>
-      <figure class="shot"><img src="ESG%20Trust/Report%20Generated.png" alt="Report Generated"><figcaption><strong>Report</strong><p>Generated ESG report summary showing on-chain anchor status and details.</p></figcaption></figure>
+      <figure class="shot video">
+        <div class="shot-img-ctx">
+          <video controls src="ESG%20Trust/DEMO.mp4"></video>
+        </div>
+        <figcaption>
+          <strong>Consensus Pipeline Demonstration</strong>
+          <p>Operational stream detailing wallet identity linkage, supplier validation sequences, and cryptographic report anchoring processes.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="shot-img-ctx"><img src="ESG%20Trust/ChatBot.png" alt="Compliance Bot"></div>
+        <figcaption>
+          <strong>Contextual Guidance Interface</strong>
+          <p>Automated conversational helper processing telemetry parameters to assist compliance teams during document preparation stages.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="shot-img-ctx"><img src="ESG%20Trust/Report%20Generated.png" alt="Report Verification"></div>
+        <figcaption>
+          <strong>Anchored Report Interface</strong>
+          <p>Structured summary display showing state proof validation and cryptographic hash anchors verified directly on-chain.</p>
+        </figcaption>
+      </figure>
     </div>
 
-    <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);max-width:70ch">
-      <h2 style="font-size:1.5rem;margin-bottom:1rem">Technical Highlights</h2>
-      <ul style="color:var(--text-muted);line-height:1.8">
-        <li><strong>Blockchain integration:</strong> MetaMask wallet login; smart contracts manage supplier approval and role detection.</li>
-        <li><strong>On-chain anchoring:</strong> Report hash is anchored to a blockchain (DCAI) for immutable proof of submission and timestamp.</li>
-        <li><strong>Off-chain storage:</strong> Full report data stored in external services for privacy and scalability; only hash anchored on-chain.</li>
-        <li><strong>Dual workspaces:</strong> Company users manage suppliers and review reports; supplier users submit ESG evidence and track submissions.</li>
-        <li><strong>Evidence management:</strong> File uploads with validation; stored separately from blockchain for easy retrieval and audit.</li>
-        <li><strong>Supply chain traceability:</strong> Companies can verify supplier credentials and report history; creates transparent ESG accountability.</li>
-      </ul>
+    <div class="tech-specs">
+      <h2>System Architecture Highlights</h2>
+      <div class="specs-grid">
+        <div class="spec-item">
+          <strong>Cryptographic Access Management</strong>
+          <p>Utilizes decentralized browser extensions (MetaMask) for authentication, relying on deployed smart contracts to authorize identity roles.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Immutable Record Anchoring</strong>
+          <p>Anchors structured report hashes onto decentralized state trees (DCAI platform), ensuring immutable proof of submission timelines.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Isolated Storage Separation</strong>
+          <p>Maintains high scalability by pushing bulky contextual assets to external file architectures while locking validation checksums directly onto the ledger.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Dual-Tenant Workspaces</strong>
+          <p>Splits control scopes into auditing panels for managing companies and submission boards for raw proof contribution by supplier actors.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Evidence Preservation Layer</strong>
+          <p>Validates raw file payloads through strict verification pipelines before cataloging assets in highly accessible auditing logs.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Traceability Pipeline</strong>
+          <p>Establishes indexable audit trails for downstream evaluations, building verified chains of operational corporate transparency.</p>
+        </div>
+      </div>
     </div>
 
-    <p style="margin-top:1rem"><a style="color:var(--text-muted);text-decoration:underline" href="ESG%20Trust/Project%20Description.txt" target="_blank">Open full project description</a></p>
   </div>
+
 </body>
 </html>

@@ -3,61 +3,296 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CRM — Details</title>
+  <title>CRM System — Walkthrough & Case Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0d0d0f;--bg-3:#1a1a1f;--text:#f0ede8;--text-muted:#888882;--border:rgba(255,255,255,0.08);--font-body:Arial, sans-serif}
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body)}
-    .container{max-width:1100px;margin:0 auto;padding:2rem}
-    .back-button{position:fixed;left:18px;top:18px;z-index:200;background:transparent;color:var(--text);border:1px solid var(--border);padding:.5rem .8rem;border-radius:8px;text-decoration:none}
-    .page-title h1{font-size:2rem;margin:0 0 0.5rem}
-    .project-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
-    .shot{background:var(--bg-3);border:1px solid var(--border);border-radius:10px;overflow:visible;display:flex;flex-direction:column}
-    .shot img{width:100%;height:auto;display:block;border-bottom:1px solid var(--border)}
-    .shot figcaption{padding:.6rem .8rem;color:var(--text-muted)}
-    .shot figcaption strong{display:block;color:var(--text);margin-bottom:.3rem}
-    @media(max-width:800px){.project-gallery{grid-template-columns:1fr}}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0c;
+      --bg-2: #121216;
+      --bg-3: #181822;
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(200,245,90,0.2);
+      --text: #f4f4f6;
+      --text-muted: #94a3b8;
+      --accent: #c8f55a;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      padding-bottom: 5rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .site-header {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,12,0.8);
+      position: sticky;
+      top: 0;
+      z-index: 500;
+    }
+
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .site-header .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .site-header .logo span { color: var(--accent); }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .project-hero {
+      margin-bottom: 4rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3rem;
+    }
+
+    .project-meta-label {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-hero h1 {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 70ch;
+    }
+
+    .project-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .shot {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .shot:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .shot-img-ctx {
+      background: #14141a;
+      width: 100%;
+      aspect-ratio: 16/10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      padding: 1rem;
+    }
+
+    .shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .shot figcaption {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .shot figcaption strong {
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .shot figcaption p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .tech-specs {
+      background: linear-gradient(135deg, var(--bg-2) 0%, #0e0e12 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .tech-specs h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .spec-item strong {
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .spec-item p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    @media(max-width: 768px){
+      .project-gallery { grid-template-columns: 1fr; }
+      .tech-specs { padding: 2rem; }
+    }
   </style>
 </head>
 <body>
-  <a class="back-button" href="projects.html">← Back</a>
-  <div class="container">
-    <div class="page-title">
-      <h1>CRM — Walkthrough</h1>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="index.html">Chai<span>.</span></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="projects.html" class="active">Projects</a>
+      </nav>
     </div>
-    <p style="color:var(--text-muted);max-width:70ch">Screenshots below show the CRM interfaces: admin dashboards, sales rep views, lead and interaction history, calendar follow-ups, and report generators.</p>
+  </header>
+
+  <div class="container">
+    <div class="project-hero">
+      <p class="project-meta-label">Enterprise Architecture Walkthrough</p>
+      <h1>CRM System</h1>
+      <p class="project-desc">A deep dive into a secure corporate relationship intelligence platform managing customer life cycles, sales pipelining, and automated metrics reporting.</p>
+    </div>
 
     <div class="project-gallery">
-      <figure class="shot"><img src="CRM%20Screenshot/Login.png" alt="Login"><figcaption><strong>Login</strong><p>Sales reps and admins log in to access their workspaces.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Sign%20Up.png" alt="Sign Up"><figcaption><strong>Sign Up</strong><p>Sign up flow for creating accounts (when applicable).</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Dashboard.png" alt="Admin Dashboard"><figcaption><strong>Admin Dashboard</strong><p>Global admin view with key metrics and navigation.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Dashboard%20with%20Menu%20Side%20Bar.png" alt="Admin Dashboard with sidebar"><figcaption><strong>Admin — Sidebar</strong><p>Dashboard with collapsible sidebar for quick navigation.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Sales%20Rep%20Dashboard.png" alt="Sales Rep Dashboard"><figcaption><strong>Sales Rep Dashboard</strong><p>Personal sales metrics and targets for sales representatives.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Customer%20Management.png" alt="Customer Management"><figcaption><strong>Customer Management</strong><p>Admin tools for viewing and editing customer records.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Lead%20Management.png" alt="Lead Management"><figcaption><strong>Lead Management</strong><p>Manage lead lifecycle, assign reps, update status.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Manage%20Sales%20Rep%20Page.png" alt="Manage Sales Rep"><figcaption><strong>Manage Sales Reps</strong><p>Create and edit sales rep profiles and permissions.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Add%20Sales%20Rep%20Floating%20Screen.png" alt="Add Sales Rep"><figcaption><strong>Add Sales Rep</strong><p>Quick-add modal to register a new sales representative.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Edit%20Sales%20Rep%20Details%20Floating%20screen.png" alt="Edit Sales Rep"><figcaption><strong>Edit Sales Rep</strong><p>Floating edit dialog for updating rep details.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Sales%20Rep%20Report%20Generator.png" alt="Sales Rep Report Generator"><figcaption><strong>Report Generator</strong><p>Generate PDF/CSV reports for reps and time ranges.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Sales%20Rep%20Personal%20Sales%20Report%20Generator.png" alt="Personal Sales Report"><figcaption><strong>Personal Sales Report</strong><p>Sales reps can generate their own sales performance reports.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Product%20Inventory%20View.png" alt="Product Inventory"><figcaption><strong>Product Inventory</strong><p>Inventory view to manage products and stock levels.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Follow%20Up%20Calendar.png" alt="Follow Up Calendar"><figcaption><strong>Follow-up Calendar</strong><p>Calendar view for scheduling and tracking follow-ups.</p></figcaption></figure>
-      <figure class="shot"><img src="CRM%20Screenshot/Admin%20Interation%20History.png" alt="Interaction History"><figcaption><strong>Interaction History</strong><p>Detailed logs of customer interactions and notes.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Login.png" alt="Portal Login"></div><figcaption><strong>Portal Authentication</strong><p>Secure workspace entry gateway separating system roles based on user profiles.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Sign%20Up.png" alt="Registration Flow"></div><figcaption><strong>Account Provisioning</strong><p>Self-contained tenant onboarding flow for credential initialization.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Dashboard.png" alt="Administrative Overview"></div><figcaption><strong>Executive Admin Dashboard</strong><p>Global visual summary analyzing organizational metrics and high-level operations.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Dashboard%20with%20Menu%20Side%20Bar.png" alt="Navigation Sidebar"></div><figcaption><strong>Collapsible Operations Control</strong><p>Ergonomic global sidebar menu optimized for seamless cross-module navigation.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Sales%20Rep%20Dashboard.png" alt="Representative View"></div><figcaption><strong>Representative Performance Suite</strong><p>Personal analytics console displaying target fulfillment rates and context metrics.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Customer%20Management.png" alt="Account Management"></div><figcaption><strong>Account Ledger Base</strong><p>Central identity database allowing complete manipulation of historical customer profiles.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Lead%20Management.png" alt="Lead Lifecycle Control"></div><figcaption><strong>Funnel Allocation Matrix</strong><p>Lead tracking engine monitoring account conversion and task handoffs.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Manage%20Sales%20Rep%20Page.png" alt="Staff Control"></div><figcaption><strong>Personnel Roster Directory</strong><p>Granular access configuration control managing sales agent parameters.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Add%20Sales%20Rep%20Floating%20Screen.png" alt="Creation Modal"></div><figcaption><strong>Contextual Provisioning Overlay</strong><p>Inline creation form layer enabling dynamic addition of agent accounts without context loss.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Edit%20Sales%20Rep%20Details%20Floating%20screen.png" alt="Modification Interface"></div><figcaption><strong>Inline Profile Customizer</strong><p>Focused editing sheet facilitating safe runtime parameter alterations.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Sales%20Rep%20Report%20Generator.png" alt="Data Assembly Engine"></div><figcaption><strong>Corporate Reporting Workspace</strong><p>Query manager parsing analytical results for targeted performance windows.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Sales%20Rep%20Personal%20Sales%20Report%20Generator.png" alt="Agent Export"></div><figcaption><strong>Self-Audit Reporting System</strong><p>Isolated reporting interface allowing agents to compile individual export outputs.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Product%20Inventory%20View.png" alt="Stock Registry"></div><figcaption><strong>Inventory Catalog Console</strong><p>Real-time asset log synchronizing volume status with incoming order accounts.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Follow%20Up%20Calendar.png" alt="Scheduling Calendar"></div><figcaption><strong>Chronological Task Scheduler</strong><p>Visual planning board tracking calendar communications and milestones.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="CRM%20Screenshot/Admin%20Interation%20History.png" alt="Activity Log"></div><figcaption><strong>Communication Audit Trail</strong><p>Timestamped chronological log preserving communication interactions.</p></figcaption></figure>
     </div>
 
-    <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);max-width:70ch">
-      <h2 style="font-size:1.5rem;margin-bottom:1rem">Technical Highlights</h2>
-      <ul style="color:var(--text-muted);line-height:1.8">
-        <li><strong>Dual-role dashboards:</strong> Role-based access control separates admin and sales rep views; permissions enforced server-side.</li>
-        <li><strong>Lead lifecycle:</strong> Tracks leads from creation through conversion; integrates interaction history and follow-up calendar.</li>
-        <li><strong>Calendar integration:</strong> Scheduled follow-ups sync with a calendar view; reminders and notifications keep reps engaged.</li>
-        <li><strong>Report generation:</strong> PDF/CSV export with configurable date ranges and metrics; admin and rep-level reporting.</li>
-        <li><strong>Interaction logging:</strong> Every contact, call, email, or note is timestamped and searchable for audit trails.</li>
-        <li><strong>Inventory management:</strong> Product catalog and stock tracking tied to lead and customer records.</li>
-      </ul>
+    <div class="tech-specs">
+      <h2>System Architecture Highlights</h2>
+      <div class="specs-grid">
+        <div class="spec-item">
+          <strong>Role-Based Security Gating</strong>
+          <p>Enforces strict server-side permission validations ensuring complete visual and operational isolation between administrative layers and sales environments.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Lifecycle Pipeline Auditing</strong>
+          <p>Tracks continuous business conversion milestones, systematically linking event histories with relational data blocks.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Reactive Scheduling Calendars</strong>
+          <p>Integrates timeline update channels that keep system handlers informed of upcoming target follow-ups through systematic date calculations.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Structured Document Synthesis</strong>
+          <p>Compiles structured file formatting (PDF/CSV summaries) on demand, respecting dynamic time ranges and filtering parameters.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Transactional Ledger Traversal</strong>
+          <p>Preserves immutable timestamped documentation logs, establishing indexable data arrays for complete enterprise compliance testing.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Relational Asset Sync</strong>
+          <p>Maintains atomic product stock synchronization, connecting catalog balances with structural pipeline updates.</p>
+        </div>
+      </div>
     </div>
-
-    <p style="margin-top:1rem"><a style="color:var(--text-muted);text-decoration:underline" href="CRM%20Screenshot/Description%20of%20Project.txt" target="_blank">Open full project description</a></p>
 
   </div>
+
 </body>
 </html>

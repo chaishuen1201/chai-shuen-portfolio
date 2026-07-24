@@ -3,54 +3,294 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Canine Care — Details</title>
+  <title>Canine Care — Mobile Tracking Walkthrough</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0d0d0f;--bg-3:#1a1a1f;--text:#f0ede8;--text-muted:#888882;--border:rgba(255,255,255,0.08);--accent:#c8f55a;--font-display:Georgia,serif;--font-body:Arial,sans-serif}
-    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body)}
-    .container{max-width:1100px;margin:0 auto;padding:2rem}
-    .back-button{position:fixed;left:18px;top:18px;z-index:200;background:transparent;color:var(--text);border:1px solid var(--border);padding:.5rem .8rem;border-radius:8px;text-decoration:none}
-    .page-title{display:flex;align-items:center;gap:1rem;margin-top:1.5rem}
-    .page-title h1{font-family:var(--font-display);font-size:2rem;margin:0}
-    .project-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.25rem}
-    .shot{background:var(--bg-3);border:1px solid var(--border);border-radius:10px;overflow:visible;display:flex;flex-direction:column}
-    .shot img{width:100%;height:auto;display:block;border-bottom:1px solid var(--border)}
-    .shot figcaption{padding:.6rem .8rem;color:var(--text-muted)}
-    .shot figcaption strong{display:block;color:var(--text);margin-bottom:.3rem}
-    @media(max-width:800px){.project-gallery{grid-template-columns:1fr}}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050507;
+      --bg-2: #0b0b0f;
+      --bg-3: #12121a;
+      --border: rgba(255,255,255,0.05);
+      --border-hover: rgba(200,245,90,0.2);
+      --text: #f4f4f6;
+      --text-muted: #94a3b8;
+      --accent: #c8f55a;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      padding-bottom: 5rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* GLOBAL HEADER INTEGRATION */
+    .site-header {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,12,0.8);
+      position: sticky;
+      top: 0;
+      z-index: 500;
+    }
+
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .site-header .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .site-header .logo span { color: var(--accent); }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* CONTAINER CONFIGURATION */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .project-hero {
+      margin-bottom: 4rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3rem;
+    }
+
+    .project-meta-label {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-hero h1 {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 70ch;
+    }
+
+    /* COMPONENT GALLERY GRID */
+    .project-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .shot {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .shot:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .shot-img-ctx {
+      background: #14141a;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem;
+    }
+
+    .shot img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: brightness(0.9) contrast(0.98);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    }
+
+    .shot figcaption {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .shot figcaption strong {
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .shot figcaption p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* TECHNICAL ARCHITECTURE PANEL */
+    .tech-specs {
+      background: linear-gradient(135deg, var(--bg-2) 0%, #0e0e12 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3.5rem;
+    }
+
+    .tech-specs h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .spec-item strong {
+      font-size: 1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .spec-item p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    @media(max-width: 768px){
+      .project-gallery { grid-template-columns: 1fr; }
+      .tech-specs { padding: 2rem; }
+    }
   </style>
- </head>
+</head>
 <body>
-  <a class="back-button" href="projects.html">← Back</a>
-  <div class="container">
-    <div class="page-title">
-      <h1>Canine Care — Walkthrough</h1>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="index.html">Chai<span>.</span></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="projects.html" class="active">Projects</a>
+      </nav>
     </div>
-    <p style="color:var(--text-muted);max-width:70ch">Walk through the main screens for Canine Care. Captions are placed below each screenshot.</p>
+  </header>
+
+  <div class="container">
+    <div class="project-hero">
+      <p class="project-meta-label">Mobile Subsystem Case Walkthrough</p>
+      <h1>Canine Care</h1>
+      <p class="project-desc">A deep dive into the application flow interface, backend data storage logs, and user onboarding pipelines designed for dog posture tracking metrics.</p>
+    </div>
 
     <div class="project-gallery">
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Login.png" alt="Login"><figcaption><strong>Login</strong><p>Sign in and route to verification or profile completion.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Sign%20Up.png" alt="Sign Up"><figcaption><strong>Sign Up</strong><p>Create account and complete profile details.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Homepage.png" alt="Home"><figcaption><strong>Home</strong><p>Choose a dog profile and start scans.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Add%20Dog.png" alt="Add Dog"><figcaption><strong>Add Dog</strong><p>Add dog profile with name, breed, and age.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Edit%20Dog.png" alt="Edit Dog"><figcaption><strong>Edit Dog</strong><p>Update or delete dog profiles.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Result%20Page.png" alt="Result"><figcaption><strong>Result</strong><p>Diagnosis, images, sharing and download options.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/History%20Page.png" alt="History"><figcaption><strong>History</strong><p>View and filter past scan results.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Education%20How%20to%20Use.png" alt="Education"><figcaption><strong>Education</strong><p>Posture guidance and usage instructions.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Find%20Vet.png" alt="Find Vet"><figcaption><strong>Vet Finder</strong><p>Search for nearby veterinarians using location.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Share%20info.png" alt="Share"><figcaption><strong>Share</strong><p>Share scan results externally.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Canine%20Care%20Firestore%20View.png" alt="Firestore"><figcaption><strong>Firestore</strong><p>Profile and scan data stored in Firestore.</p></figcaption></figure>
-      <figure class="shot"><img src="Canine%20Care%20Screenshot/Canine%20CAre%20Storage%20View.png" alt="Storage"><figcaption><strong>Storage</strong><p>Uploaded images stored for retrieval.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Login.png" alt="Login Portal"></div><figcaption><strong>Identity Entry Access</strong><p>Secure sign-in routing system validating user credentials and account mapping profiles.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Sign%20Up.png" alt="Sign Up Pipeline"></div><figcaption><strong>Dynamic Provisioning Setup</strong><p>Self-contained user onboarding menu logging verified authentication profiles.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Homepage.png" alt="App Home Dashboard"></div><figcaption><strong>Primary Dashboard View</strong><p>Central workspace portal initiating scanning loops and active canine selector scopes.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Add%20Dog.png" alt="Add Profile Registry"></div><figcaption><strong>Asset Creation Directory</strong><p>Structured parameters menu documenting custom canine biometric metrics into the system.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Edit%20Dog.png" alt="Edit Profile Options"></div><figcaption><strong>Runtime Profile Modifier</strong><p>Inline modification panel processing updates or logical deletions on structural metadata.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Result%20Page.png" alt="Analysis Telemetry Output"></div><figcaption><strong>Classification Telemetry Matrix</strong><p>Evaluation terminal compiling analysis status diagnostics alongside storage distribution parameters.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/History%20Page.png" alt="Historical Analytics Ledger"></div><figcaption><strong>Chronological Index Log</strong><p>Query manager filtering and sorting historical analysis results records across tracking timelines.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Education%20How%20to%20Use.png" alt="Onboarding Documentation Sheets"></div><figcaption><strong>Operational Guidelines Interface</strong><p>Contextual documentation sheets teaching appropriate multi-perspective angle framing targets.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Find%20Vet.png" alt="Dynamic Node Map Finder"></div><figcaption><strong>Dynamic Spatial Locator</strong><p>Dynamic location tracking module cross-referencing global map vectors with clinic nodes.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Share%20info.png" alt="External Shared Link Pipeline"></div><figcaption><strong>Data Sharing Gateway</strong><p>System dispatcher packaging analysis summary links for external distribution channels.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Canine%20Care%20Firestore%20View.png" alt="NoSQL Collection Architecture"></div><figcaption><strong>Cloud Document Telemetry View</strong><p>Structured NoSQL collection cluster managing atomic record replication in real time.</p></figcaption></figure>
+      <figure class="shot"><div class="shot-img-ctx"><img src="Canine%20Care%20Screenshot/Canine%20CAre%20Storage%20View.png" alt="Secure Blob Bucket Registries"></div><figcaption><strong>Object Storage Infrastructure</strong><p>Secure binary blob storage bucket organizing pristine uploaded analytical source materials.</p></figcaption></figure>
     </div>
-    <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);max-width:70ch">
-      <h2 style="font-size:1.5rem;margin-bottom:1rem">Technical Highlights</h2>
-      <ul style="color:var(--text-muted);line-height:1.8">
-        <li><strong>Cross-platform:</strong> Built with Flutter to support mobile (iOS/Android) and web from a single codebase.</li>
-        <li><strong>Real-time sync:</strong> Firestore integration enables live data synchronization across devices and sessions without manual refresh.</li>
-        <li><strong>Image processing:</strong> Four-angle photo capture with quality validation ensures consistent model input for analysis.</li>
-        <li><strong>Authentication flow:</strong> Email verification gates → Profile completion → Home dashboard ensures onboarding compliance.</li>
-        <li><strong>Responsive design:</strong> Adaptive layouts handle small phones to large tablets; camera vs. gallery fallback on web.</li>
-        <li><strong>State management:</strong> Provider/GetX patterns for efficient state updates across feature modules.</li>
-      </ul>
-    </div>  </div>
+
+    <div class="tech-specs">
+      <h2>Technical Performance Highlights</h2>
+      <div class="specs-grid">
+        <div class="spec-item">
+          <strong>Cross-Platform Foundation Profile</strong>
+          <p>Engineered using declarative multi-device runtimes to build parallel native compile profiles from one codebase.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Reactive Data Pipeline Linkage</strong>
+          <p>Utilizes open live-query database synchronization streams to handle interface updates completely independent of page reloads.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Multi-Perspective Capture Matrix</strong>
+          <p>Enforces strict multi-point structural quality validation checkpoints before passing raw images to model parsing targets.</p>
+        </div>
+        <div class="spec-item">
+          <strong>State-Gated Authentication Access</strong>
+          <p>Protects user spaces with verification barriers that handle role setup phases before allowing home workspace initialization.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Fluid Display Adaptability</strong>
+          <p>Features dynamic window grid transformations that seamlessly adjust dimensions across custom hardware screen aspect ratios.</p>
+        </div>
+        <div class="spec-item">
+          <strong>Decoupled State Lifecycle Architecture</strong>
+          <p>Implements modular reactive controller instances to isolate data manipulation routines across decoupled system feature boundaries.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
